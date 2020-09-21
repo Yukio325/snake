@@ -22,12 +22,17 @@ function Snake() {
     this.update = function() {
       this.x += this.xspeed*scl;
       this.y += this.yspeed*scl;
-      this.x = constrain(this.x, 0, width-scl);
-      this.y = constrain(this.y, 0, height-scl);
-
+      if (this.x>width-scl || this.x<0 || this.y>height-scl || this.y<0) {
+        this.xspeed = 0;
+        this.yspeed = 0;
+        this.pickSnakePos();
+      }
     }
 
     this.show = function() {
+      fill(255,0,0);
+      noStroke();
+      rect(this.ftPosX, this.ftPosY, scl, scl);
       fill(255);
       stroke(255);
       rect(this.x, this.y, scl, scl);
@@ -35,8 +40,5 @@ function Snake() {
         line(scl*i, 0, scl*i, height);
         line(0, scl*i, width, scl*i);
       }
-      fill(255,0,0);
-      noStroke();
-      rect(this.ftPosX, this.ftPosY, scl, scl)
     }
 }
